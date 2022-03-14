@@ -1,0 +1,21 @@
+.form-header{
+    font-size: 32px;
+    background:-webkit-linear-gradient(90deg,
+    rgb(173, 10, 160)3%,
+    rgb(215, 85, 224) 33%,
+     rgb(220, 163, 233)100%);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color:transparent;
+}
+.arrow-logo{
+    height: 15px;
+    fill: white;
+    transform: translateX(150%);
+    -webkit-transform: translateX(150%);
+    -moz-transform: translateX(150%);
+    -ms-transform: translateX(150%);
+    -o-transform: translateX(150%);
+    &:hover{
+        background-color: transparent;
+    }
+}

@@ -1,0 +1,37 @@
+$main-color:#d6d2d2;
+$sub-color:white;
+
+.form-container{
+    display: flex;
+    padding: 1rem;
+    justify-content: center;
+    align-content: center;
+
+    .form-input{
+        height: 3rem;
+        width: 20rem;
+        display: flex;
+        align-content: center;
+        background-color:$sub-color;
+        border-top: 1px solid $sub-color;
+        border-left: 1px solid $sub-color;
+        border-right: 1px solid $sub-color;
+        font-size: 18px;
+
+        &:focus{
+            outline: none;
+            transition: ease-in .5s ;
+            border-bottom:3px solid rgba(228, 29, 211,1) ;
+            -webkit-transition: ease-in .5s ;
+            -moz-transition: ease-in .5s ;
+            -ms-transition: ease-in .5s ;
+            -o-transition: ease-in .5s ;
+}
+    }
+
+    input[type='password']{
+        letter-spacing: .2em;
+    }
+    
+
+}
