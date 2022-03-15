@@ -1,5 +1,5 @@
 $main-color:#d6d2d2;
-$sub-color:white;
+$sub-color:rgb(233, 233, 241);
 
 .form-container{
     display: flex;
@@ -17,11 +17,12 @@ $sub-color:white;
         border-left: 1px solid $sub-color;
         border-right: 1px solid $sub-color;
         font-size: 18px;
+        border-bottom:1px solid  rgb(107, 107, 107);
 
         &:focus{
             outline: none;
             transition: ease-in .5s ;
-            border-bottom:3px solid rgba(228, 29, 211,1) ;
+            border-bottom:3px solid rgb(4, 0, 255) ;
             -webkit-transition: ease-in .5s ;
             -moz-transition: ease-in .5s ;
             -ms-transition: ease-in .5s ;

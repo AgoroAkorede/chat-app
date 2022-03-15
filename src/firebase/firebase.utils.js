@@ -15,6 +15,26 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(config);
+firebase.initializeApp(firebaseConfig);
+export const firestore = firebase.firestore()
 
-export const auth=app.auth()
+
+export const createUserProfileDocument = async (userAuth, additionalData)=>{
+    if (!userAuth) return;
+    
+
+
+}
+
+//Get currentUser
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = auth.onAuthStateChanged(userAuth => {
+            unsubscribe();
+            resolve(userAuth);
+        },reject)
+    })
+}
+
+export const auth = firebase.auth();
+export default firebase;
