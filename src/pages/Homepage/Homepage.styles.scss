@@ -1,0 +1,14 @@
+.homepage{
+    display: flex;
+    flex-direction: row;
+
+    .peoples-section{
+        // display: flex;
+        .footer{
+            margin: 2rem;
+            display:flex;
+            width: 100%;
+            justify-content: space-evenly;
+        }
+    }
+}

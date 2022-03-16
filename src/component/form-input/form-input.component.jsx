@@ -1,12 +1,12 @@
 import React from 'react';
 import './form-input.styles.scss'
 
-const FormInPut = ({label,...otherProps}) => {
+const FormInput = ({handleChange, label,...otherProps}) => {
     return (
         <div className="form-container">
-            <input className="form-input" label={label} {...otherProps} />
+            <input className="form-input" label={label} {...otherProps} onChange={handleChange} />
         </div>
     )
 }
 
-export default FormInPut;
+export default FormInput;

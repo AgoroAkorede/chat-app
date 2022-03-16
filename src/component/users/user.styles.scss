@@ -1,0 +1,31 @@
+.contact-container{
+    display: flex;
+    height: 5rem;
+    border-bottom: blue solid 2px;
+    width: 50vw;
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    background-color: transparent;
+
+    .contact-image{
+        height: 3rem;
+        width: 3rem;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        display: flex;
+        align-self: center;
+    }
+.contact-name{
+        background:linear-gradient(to right, 
+        rgba(4, 127, 209, 0.719)3%,    
+        rgb(76, 4, 211) 33%,     rgb(221, 5, 221)100%
+       );
+        background-clip: text;
+         -webkit-text-fill-color:transparent;
+    };
+    
+}
