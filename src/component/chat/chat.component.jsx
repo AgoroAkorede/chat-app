@@ -1,28 +1,39 @@
 import React,{useState} from 'react';
+import { createChat } from '../../redux/chat/chat.action';
+import {connect} from 'react-redux'
+
+
 import SearchBox from '../search-box/search-box.component'
 import CircleButton from '../circlebutton/circle-button'
+// import CreateChat from '../create-chat/create-chat.component'
+import ChatInput from '../chat-input/chat-input.component'
+import Message from '../message/message.component';
 
-import CreateChat from '../create-chat/create-chat.component'
-
-import FormInput from '../../component/form-input/form-input.component'
-const Chat = () => {
-    const [chat,setChat]=useState("")
+const Chat = ({createChat}) => {
+    const [chat,setChat]=useState({chatMessage:""})
 
     const handleChange = event => {
-        setChat({ [ event.target.name ]: event.target.value })
-        console.log('working');
+        setChat({ chatMessage: event.target.value });
+        console.log(chat)
     }
 
     const sendMessage = () => {
-     <CreateChat />
+        
     }
 
     return (
         <div>
             <h1>{ }</h1>
-           <FormInput placeholder="Start A Conversation" onChange={handleChange} />
-           <CircleButton onClick={sendMessage(chat)}>></CircleButton>
+           <ChatInput placeholder="Start A Conversation"  />
+          
         </div>
     )
 }
+
+
+const mapDispatchToProps = dispatch => ({
+    createChat: (message) =>  createChat(dispatch(message))
+})
+
+// export default connect(null,mapDispatchToProps)(Chat)
 export default Chat

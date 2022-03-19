@@ -4,22 +4,22 @@ const INITIAL_STATE = {
     error: null
 }
 
-const userReducer = (state=INITIAL_STATE, action) => {
+const chatReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case  chatActionTypes.SET_MESSAGE:
+        case chatActionTypes.SET_MESSAGE:
             return {
                 ...state,
                 message: action.payload,
-                error:null
-            }
-            case  chatActionTypes.CLEAR_MESSAGE:
-                return {
-                    ...state,
-                    message: null,
-                    error:null
-                }
-            default:
-            return state
+                error: null
+            };
+        case chatActionTypes.CLEAR_MESSAGE:
+            return {
+                ...state,
+                message: "",
+                error: null
+            };
+        default:
+            return state;
     }
 }
 export default chatReducer;

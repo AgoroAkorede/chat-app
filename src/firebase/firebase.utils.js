@@ -1,10 +1,16 @@
-// Import the functions you need from the SDKs you need
-import firebase from 'firebase/compat/app';
 
+import firebase from 'firebase/compat/app';
+// import { GoogleAuthProvider } from "firebase/auth";
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth'
 
-const firebaseConfig = {
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {  getRedirectResult} from "firebase/auth";
+import { useRef } from 'react';
+
+const provider = new GoogleAuthProvider();
+
+const config = {
   apiKey: "AIzaSyCgbCWEnQE-8qQIM0tplQz4uDGa9SFNuEs",
   authDomain: "chat-app-2111a.firebaseapp.com",
   projectId: "chat-app-2111a",
@@ -15,15 +21,75 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(config);
 export const firestore = firebase.firestore()
+
+// Google signin option
+
+provider.setCustomParameters({prompt:'select_account'})
+
+export const auth = getAuth();
+export const signInWithGoogle=()=>
+{signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+}
+  getRedirectResult(auth)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access Google APIs.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+  
+      // The signed-in user info.
+      const user = result.user;
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });
 
 
 export const createUserProfileDocument = async (userAuth, additionalData)=>{
-    if (!userAuth) return;
-    
+  if (!userAuth) return;
+  
+  const userRef = firestore.doc(`user/${userAuth.uid}`)
+  
+  const snapShot = await userRef.get()
+  if (!snapShot.exists) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
 
-
+    try {
+      await userRef.set({
+        email,
+        createdAt,
+        ...additionalData
+      })
+    } catch (error) {
+      console.log('error creating user', error.message);
+    }
+  }
+  return userRef
 }
 
 //Get currentUser
@@ -36,5 +102,5 @@ export const getCurrentUser = () => {
     })
 }
 
-export const auth = firebase.auth();
+// export const auth = firebase.auth();
 export default firebase;

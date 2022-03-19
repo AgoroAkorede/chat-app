@@ -1,44 +1,73 @@
-import React,{useRef} from 'react'
+import React,{useState} from 'react'
 import FormInput from '../../component/form-input/form-input.component'
 import CustomButton from '../../component/custom-button/custom-button'
 import { ReactComponent as ArrowLogo } from '../../component/svg/arrow.svg'
-
-import {ReactComponent as PasswordIcon} from '../../component/svg/eye.svg'
-import {useAuth} from '../../Auth/AuthContext'
+import {createUserWithEmailAndPassword} from 'firebase/auth'
+import { signInWithGoogle,auth,createUserProfileDocument } from '../../firebase/firebase.utils'
 
 import './LoginPages.styles.scss'
 
-const LoginPage = () => {
-    // const [ userCredentials, setUserCredentials ] = useState({
-    //     userName: '',
-    //     email: '',
-    //     password: '',
-    //     confrimPassword: ''
-    // });
-    // const { userName, email, password, confrimPassword } = userCredentials;
+const LoginPage = ({LoginStart}) => {
+    const [ userCredentials, setUserCredentials ] = useState({
+        userName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
+    const { userName, email, password, confirmPassword } = userCredentials;
 
-    const userNameRef = useRef()
-    const emailRef = useRef()
-    const passwordRef = useRef()
-    const confirmPasswordRef = useRef()
+    // const userNameRef = useRef()
+    // const emailRef = useRef()
+    // const passwordRef = useRef()
+    // const confirmPasswordRef = useRef()
 
     // const { signup } = useAuth();
 
-    function handleSubmit(e){
-        e.preventDefault()
+    const handleSubmit = async e => {
+        e.preventDefault();
+        if (password !== confirmPassword) {
+            alert("Passwords Don't Match");
+            return;
+        }
+
+        try {
+            const { user } = await createUserWithEmailAndPassword(auth,email, password)
+            
+            await createUserProfileDocument(user, { userName })
+            
+            setUserCredentials({
+                userName: '',
+                email: '',
+                password: '',
+                confirmPassword: ''
+            })
+            
+        } catch (error) {
+            console.error(error);
+        }
+
+        // LoginStart({userName,email,password})
+    };
+
+    const handleChange = event => {
+        // event.preventDefault()
+        const { name, value } = event.target;
+        setUserCredentials({ ...userCredentials, [name]: value });
     }
+
 
     return (
         <div>
-            <h1 className="form-header">Login In</h1>
+            <h2 className="form-header">Login In</h2>
             <div className="form-container">
-        <form className="form">
+        <form className="form" onSubmit={handleSubmit}>
                 <FormInput
-                    name="username"
+                    name="userName"
                     type="text"
                     label="Username"
+                    value={userName}
                     placeholder="Username"
-                    ref={userNameRef}
+                    onChange={handleChange}
                     required
                 />
                 <FormInput
@@ -46,29 +75,33 @@ const LoginPage = () => {
                     type="email"
                     label="Email"
                     placeholder="Email"
-                    ref={emailRef}
+                    value={email}
+                    onChange={handleChange}
                     required
                 />
                 <FormInput
-                    name="passwrd"
+                    name="password"
                     type="password"
                     label="Password"
                     placeholder="Password"
-                    ref={passwordRef}
+                    value={password}
+                    onChange={ handleChange }
                     required
                 >
                 </FormInput>
                 <FormInput
-                    name="confirm password"
+                    name="confirmPassword"
                     type="password"
                     label="confirm password"
                     placeholder="Confrim Password"
-                    ref={confirmPasswordRef}
+                    value={confirmPassword}
+                    onChange={ handleChange }
                     required
                 />
-                <CustomButton>Continue <ArrowLogo className="arrow-logo" /></CustomButton>
+                <CustomButton type='submit'>Continue <ArrowLogo className="arrow-logo" /></CustomButton>
+            <CustomButton styles={{width:'10px'}} onClick={signInWithGoogle}>Sign In With Google </CustomButton>
                 </form>
-                </div>
+            </div>
     </div>)
 }
 
